@@ -103,17 +103,23 @@ def rartity_generator_os(os):
         score_os = score_os + 20
         return score_os
 
+#with this function i want to be able to go through the list of numbers and add points
 def rarity_generator_port(ports):
+    number_list = []
     port_list = ports.split(",")
     score_port = 0
     for number in port_list:
-        number = int(number)
-    if number == 80:
-        score_port = score_port + 5
-        return score_port
-    elif number == 443:
-        score_port = score_port + 5
-        return score_port
+        #score_port = score_port +  5
+        if number in ["80","443","22"]:
+            score_port = score_port +  5
+        elif number not in ["80","443","22"]:
+            score_port = score_port + 0
+
+            
+    return score_port
+    # somehow i want to iterate over each number (that is check each number) and if it is in the list of number score_plus equal 5       
+        
+
 
 
 def rarity_classification(A,B,C,D):
@@ -124,8 +130,8 @@ def rarity_classification(A,B,C,D):
 # the host function will generate the monster and display stats
 def host(os,ports,ip_address,A,B,C,D):
 
-    print("===========================\n")
-    print ("Network Hunter\n")
+    print("===========================")
+    print ("Network Hunter")
     print("===========================\n")
     os_result = os_check(os)
     

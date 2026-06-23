@@ -86,9 +86,16 @@ def rarity_generator_ip(A,B,C,D):
         return score
        
     elif A == 10:
-        score = score + 10
+        score = score + 5
         return score
-
+    
+    elif A == 172 and B >= 16 and B <= 31:
+        score = score + 5
+        return score
+    
+    elif A == 127:
+        score = score + 15
+        return score
 def rartity_generator_os(os):
     score_os = 0
     if os == "windows":
@@ -127,6 +134,22 @@ def biome(A,B,C,D):
         choice = input("type 1 to continue: ")
         if choice == "1":
             return "1"
+        elif choice == "2":
+            return "2"
+        elif choice == "3":
+            return "3"
+    elif rarity_generator_ip(A,B,C,D) == 15:
+        print("You have entered")
+        print("##################\nMirror Realm\n##################")
+        print("Your search for a network\nleads only to yourself.....")
+        choice = input("type 1 to continue: ")
+        if choice == "1":
+            return "1"
+        elif choice == "2":
+            return "2"
+        elif choice == "3":
+            return "3"
+    #elif rarity_generator_ip(A,B,C,D) == 
 #def species():
     #if 
 

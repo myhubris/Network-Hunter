@@ -1,5 +1,8 @@
 def main():
     # ask for input from the user for now... eventually id like to scan computers
+    print("===========================")
+    print ("Network Hunter")
+    print("===========================\n")
 
     ip_address = input("Enter an ip address: ")
 
@@ -210,48 +213,59 @@ def monster(A,B,C,D,os,ports):
     Total = score_os + score_ip + score_port
 
     if Total <= 15:
-        print("latop ooze")
+        print("===========================")
+        print("laptop ooze")
+        print("===========================")
     elif Total > 15 and Total <= 25:
+        print("===========================")
         print("ethernet ghoul")
-
+        print("===========================")
+def found():
+    you_found = input("You found.......")
+    if you_found == "1":
+        return you_found
 # the host function will generate the monster and display stats
 def host(os,ports,ip_address,A,B,C,D):
     biome_result = biome(A,B,C,D)
     if biome_result == "1":
-
-        print("===========================")
-        print ("Network Hunter")
-        print("===========================\n")
-        os_result = os_check(os)
         
-        port_result = port_check(ports)
+        found_text = found()
+        if found_text == "1":
+            #print("===========================")
+            #print ("Network Hunter")
+            #print("===========================\n")
 
-        print (f"os:",os_result,"\n")
+            monster(A,B,C,D,os,ports)
+            os_result = os_check(os)
+            
+            port_result = port_check(ports)
 
-        for number in port_result:
-            print (f"port:" ,number,"\n")
+            print (f"os:",os_result,"\n")
 
-        #ip_check(ip_address)
+            for number in port_result:
+                print (f"port:" ,number,"\n")
+
+            #ip_check(ip_address)
 
 
-        ip_result = ip_check(ip_address)
+            ip_result = ip_check(ip_address)
 
-        print(private_or_public(A,B,C,D),"\n")
+            print(private_or_public(A,B,C,D),"\n")
 
-        score_ip = rarity_generator_ip(A,B,C,D)
+            score_ip = rarity_generator_ip(A,B,C,D)
 
-        score_os = rartity_generator_os(os)
+            score_os = rartity_generator_os(os)
 
-        score_port = rarity_generator_port(ports)
+            score_port = rarity_generator_port(ports)
 
-        Total = score_os + score_ip + score_port
+            Total = score_os + score_ip + score_port
 
-        print(Total)
-        
-        rarity_classification(A,B,C,D,os,ports)
+            print(Total)
+            
+            rarity_classification(A,B,C,D,os,ports)
 
-        monster(A,B,C,D,os,ports)
-        
+            
+            
 
 
         

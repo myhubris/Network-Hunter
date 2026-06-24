@@ -199,6 +199,20 @@ def rarity_classification(A,B,C,D,os,ports):
     if Total <= 20:
         print ("common")
 
+def monster(A,B,C,D,os,ports):
+    score_ip = rarity_generator_ip(A,B,C,D)
+
+    score_os = rartity_generator_os(os)
+
+    score_port = rarity_generator_port(ports)
+
+    Total = score_os + score_ip + score_port
+
+    if Total <= 15:
+        print("latop ooze")
+    elif Total > 15 and Total <= 25:
+        print("ethernet ghoul")
+
 # the host function will generate the monster and display stats
 def host(os,ports,ip_address,A,B,C,D):
     biome_result = biome(A,B,C,D)
@@ -223,16 +237,21 @@ def host(os,ports,ip_address,A,B,C,D):
 
         print(private_or_public(A,B,C,D),"\n")
 
-        #score_ip = rarity_generator_ip(A,B,C,D)
+        score_ip = rarity_generator_ip(A,B,C,D)
 
-        #score_os = rartity_generator_os(os)
+        score_os = rartity_generator_os(os)
 
-        #score_port = rarity_generator_port(ports)
+        score_port = rarity_generator_port(ports)
 
-        #Total = score_os + score_ip + score_port
+        Total = score_os + score_ip + score_port
 
-        #print(Total)
+        print(Total)
+        
         rarity_classification(A,B,C,D,os,ports)
+
+        monster(A,B,C,D,os,ports)
+        
+
 
         
 

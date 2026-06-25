@@ -200,7 +200,7 @@ def rarity_classification(A,B,C,D,os,ports):
     Total = score_os + score_ip + score_port
 
     if Total <= 20:
-        print ("common")
+        print ("00001 common\n")
 
 # monster generator eventually itll be based on biome as well
 def monster(A,B,C,D,os,ports):
@@ -215,7 +215,7 @@ def monster(A,B,C,D,os,ports):
     if Total <= 15:
         print("===========================")
         print("laptop ooze")
-        print("===========================")
+        print("===========================\n")
     elif Total > 15 and Total <= 25:
         print("===========================")
         print("ethernet ghoul")
@@ -224,6 +224,32 @@ def found():
     you_found = input("You found.......")
     if you_found == "1":
         return you_found
+
+#def os_determination():
+
+#def port_traits(ports):
+    #port 80 (HTTP) Hypertext transfer protocol
+    #unencrypted(vulnerable to eavesdropping and interception)
+    #outdated 
+    #port 443 (HTTPS) Hypertext transfer protocol secure
+    #routes datat through a secure, scrambled "tunnel"
+    #modern, secure
+    #port 22 (secure shell) 
+    # securely connects to servers and issues commands over the internet
+    #port 53 (DNS) Domain name system
+    # translator 
+    # default network port used by the Domain Name System
+    # primary gateway for translating human-readable website domains
+    # into machine readable ip addresses
+    
+def individual_port(ports):
+    port_result = port_check(ports)
+    for number in port_result:
+        print (f"port:" ,number,"\n")
+        if number == "80":
+            print ("HTTP")
+        if number == "443":
+            print ("HTTPS")
 # the host function will generate the monster and display stats
 def host(os,ports,ip_address,A,B,C,D):
     biome_result = biome(A,B,C,D)
@@ -236,6 +262,9 @@ def host(os,ports,ip_address,A,B,C,D):
             #print("===========================\n")
 
             monster(A,B,C,D,os,ports)
+
+            rarity_classification(A,B,C,D,os,ports)
+
             os_result = os_check(os)
             
             port_result = port_check(ports)
@@ -245,6 +274,7 @@ def host(os,ports,ip_address,A,B,C,D):
             for number in port_result:
                 print (f"port:" ,number,"\n")
 
+            individual_port(ports)
             #ip_check(ip_address)
 
 
@@ -260,10 +290,17 @@ def host(os,ports,ip_address,A,B,C,D):
 
             Total = score_os + score_ip + score_port
 
-            print(Total)
+            print("Score:",Total,"\n")
             
-            rarity_classification(A,B,C,D,os,ports)
-    
+            #rarity_classification(A,B,C,D,os,ports)
+
+            
+            
+
+
+        
+
+
 # we want to determine how rare a monster is based on info we collect
 
 

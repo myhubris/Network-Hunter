@@ -273,7 +273,9 @@ def individual_port(ports):
 
 
 # still working on designing a functional table for the data.... Im getting closer but apparently im mixing up data and crap.
-def port_categories_v2(ports):
+
+
+def port_categories_v3(ports):
     system_port_list = []
     ability_dictionary = {}
     port_result = port_check(ports)
@@ -285,31 +287,31 @@ def port_categories_v2(ports):
             ability_dictionary["Category"] = "SYSTEM"
             ability_dictionary["Ability"] = "Digital Switchboard"
             return ability_dictionary
-def port_categories(ports):
-    port_result = port_check(ports)
-    for number in port_result:
-        print (f"port:" ,number,"\n")
-        if number == "135" or number == "137" or number == "138" or number == "139" or number == "445":
+#def port_categories(ports):
+   #port_result = port_check(ports)
+    #for number in port_result:
+        #print (f"port:" ,number,"\n")
+        #if number == "135" or number == "137" or number == "138" or number == "139" or number == "445":
             #Im not 100% on what i will do with the categories yet
             #i do want to retun the data for sure.... Iono 
-            category = "SYSTEM (core infrastructure)"
-            if number == "135":
-                ability_135 = "Ability: Digital Switchboard"
+            #category = "SYSTEM (core infrastructure)"
+            #if number == "135":
+                #ability_135 = "Ability: Digital Switchboard"
                 
-                definition = ("RPC\nRemote Procedure Call")
+                #definition = ("RPC\nRemote Procedure Call")
                 
-                weakness = "Something"
-                return ability_135,definition,weakness
+                #weakness = "Something"
+                #return ability_135,definition,weakness
             
-            if number == "445":
-                print("SMB")
-                print("Server Message Block")
-                print("ability: domain communication")
-                print("Weakness: when exposed to the internet, it becomes a major attack surface for data breaches and ransomware delivery")
+            #if number == "445":
+                #print("SMB")
+                #print("Server Message Block")
+                #print("ability: domain communication")
+                #print("Weakness: when exposed to the internet, it becomes a major attack surface for data breaches and ransomware delivery")
 
-            print ("HTTP")
-        if number == "443":
-            print ("HTTPS")
+            #print ("HTTP")
+       # if number == "443":
+            #print ("HTTPS")
 
 
 # the host function will generate the monster and display stats
@@ -356,9 +358,9 @@ def host(os,ports,ip_address,A,B,C,D):
 
             #port_categories(ports)
             
-            Port_ability = port_categories_v2(ports)
+            Port_ability = port_categories_v3(ports)
             
-            print(Port_ability)
+            #print(Port_ability)
             for words in Port_ability:
                 print(words, Port_ability[words])
             

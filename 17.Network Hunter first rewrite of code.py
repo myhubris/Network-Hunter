@@ -25,6 +25,8 @@ def main():
     # the only thing stopping me is host requires A,B,C,D
     # need to consider dhcp when im making these functions
     #that is to say the ip is most likely not permanent
+
+    #im going to attempt to change my inputs and put them into fucntions so i can use try except
     ip_address = input("Enter an ip address: ")
 
     A,B,C,D = ip_address.split(".")

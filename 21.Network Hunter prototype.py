@@ -137,7 +137,6 @@ def port_check(ports):
 #there is quite a bit to add in here. More ports. More abilities. this list could be quite extensive
 # the idea though is to make a list of ports for each category/affinity
 
-
 def port_info(ports):
     system_port_list = {"135":{"name":"RPC","category": "SYSTEM (core infrastructure)","ability": "Digital Switchboard","vulnerabilities":"internet exposure"},
                         "137":{"name":"NBNS","category": "SYSTEM (core infrastructure)","ability": "Name Resolution","vulnerabilities":"info leak"},

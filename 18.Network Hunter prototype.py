@@ -113,7 +113,9 @@ def ip_info(A,B,C,D):
 
 def os_info(os):
 
-    os_list = ["windows", "linux", "mac"]
+    os_list = ["windows", 
+               "linux", 
+               "mac"]
 
     if os in os_list:
 
@@ -133,14 +135,18 @@ def port_check(ports):
 
 
 def port_info(ports):
-    system_port_list = {"135":{"category": "SYSTEM (core infrastructure)","ability": "Digital Switchboard"},
-                        "137":"SYSTEM (core infrasturucture)",
-                        "138":"SYSTEM (core infrasturucture)",}
+    system_port_list = {"135":{"category": "SYSTEM (core infrastructure)","ability": "Digital Switchboard","vulnerabilities":"internet exposure"},
+                        "137":{"category": "SYSTEM (core infrastructure)","ability": "Name Resolution","vulnerabilities":"info leak"},
+                        "445":{"category": "SYSTEM (core infrastructure)","ability": "Resource Sharing","vulnerabilities":"remote execution"},}
                         #"137","138","139","445"}
 
-    web_port_list = ["80","443","8080","8443"]
+    web_port_list = {"80":{"category": "WEB","ability": "communication channel","vulnerabilities":"inherently insecure(eavesdropping,theft,hijacking)"},
+                     "443":{"category": "WEB","ability": "virtual gateway","vulnerabilites":"entry point mask"},}
+                     #"8080","8443"}
 
-    remote_port_list = ["22","23","3389","5900"]
+    remote_port_list = ["22",
+                        "23",
+                        "3389","5900"]
 
     network_services_port_list = ["53","67","68","123","1900","5353"]
 
@@ -158,18 +164,25 @@ def port_info(ports):
 
     port_result = port_check(ports)
 
-    for number in port_result:
+    for port in port_result:
+            #print(port)
             #print (f"port:" ,number,"\n")
-            if number in system_port_list:
-                #for number in system_port_list:
-                
+        if port in system_port_list:
+                #for port,port_attribute in system_port_list.items():
 
+
+            bank = []
+            affinity = (f"port: {port}\n\ncategory: {system_port_list[port]['category']}\n\nability: {system_port_list[port]['ability']} \n\nvulnerability")       
+            
                 #category = "SYSTEM (core infrasturucture)"
-                print (f"{number} {system_port_list[number]}")
+            print(affinity)
             #the problem i have is i want port dictionary to print each time i give it a port
             #right now its only returning the end port.
             # so how can i get it to return each port individually ? mayhaps unwrap them before return?
+        elif port in web_port_list:
 
+            print (f"port: {port}\n\ncategory: {web_port_list[port]['category']}\n\nability: {web_port_list[port]['ability']}")
+            
     
                 
 
@@ -462,16 +475,30 @@ def host(os,ports,ip_address,A,B,C,D,device):
 
             monster_name = random.choice(monster_name_list)
 
+            
             device_name = device_check(device)
 
             print("==================\n",device_name,monster_name,"\n""==================")
 
             #rarity_classification(A,B,C,D,os,ports)
+            active = True
+            while active:
+                message = input("type 1 - 5 to continue")
+                if message == "1":
 
-            os_result = os_info(os)
+                    os_result = os_info(os)
             
-            print (f"os:",os_result,"\n")
+                    print (f"os:",os_result,"\n")
 
+                elif message == "2":
+                    print("\n=========Ports=========\n")
+
+                    Port_ability = port_info(ports)
+            
+                    print(Port_ability)
+
+                elif message == "0":
+                    break
             #individual_port(ports)
             
             #ip_result = ip_check(ip_address)
@@ -490,9 +517,9 @@ def host(os,ports,ip_address,A,B,C,D,device):
 
             #port_categories(ports)
             
-            Port_ability = port_info(ports)
+            #Port_ability = port_info(ports)
             
-            print(Port_ability)
+            #print(Port_ability)
             
             #for words in Port_ability:
                 #print(words, Port_ability[words])

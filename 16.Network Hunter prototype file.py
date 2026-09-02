@@ -310,6 +310,8 @@ def monster_list():
             "beast"]
     return home
 
+    
+
 # the host function will generate the monster and display stats
 def host(os,ports,ip_address,A,B,C,D,device):
     biome_result = biome(A,B,C,D)

@@ -86,6 +86,16 @@ def port_check(ports):
         #print(number)
     return port_list
 
+
+# device which user is scanning.
+#def device_check(device):
+    #if device == "laptop":
+    
+    #elif device == "phone":
+
+    #elif device == "desktop":
+
+    #elif device == "router"
 # assign range of ip addresses an amount of points based on how likely you will find them
 def rarity_generator_ip(A,B,C,D):
     score = 0
@@ -257,6 +267,18 @@ def individual_port(ports):
             print ("HTTP")
         if number == "443":
             print ("HTTPS")
+
+# still working on designing a functional table for the data.... Im getting closer but apparently im mixing up data and crap.
+def port_categories_v2(ports):
+    system_port_list = []
+    ability_dictionary = {}
+    port_result = port_check(ports)
+    for number in port_result:
+        #print (f"port:" ,number,"\n")
+        if number in system_port_list:
+            category = "SYSTEM (core infrasturucture)"
+        if number == "135":
+            ability_dictionary["Ability"] = "Digital Switchboard"
 
 def port_categories(ports):
     port_result = port_check(ports)

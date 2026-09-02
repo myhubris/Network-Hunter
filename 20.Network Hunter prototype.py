@@ -509,7 +509,7 @@ def host(os,ports,ip_address,A,B,C,D,device):
 
                 sub_active = True
                 while sub_active:
-                    submenu = input("press one for analysis: 1")
+                    submenu = input("press one for analysis: ")
                     if submenu == "1":
                        sub_menu_os(os)
 

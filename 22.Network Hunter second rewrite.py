@@ -1,19 +1,137 @@
+import curses
+
+import network_curses
+
+import os
+
+import time
+
 import random
+
+#class os:
+
+    #def __init__(self,os):
+        #self.os_info = os_info(os)
+
+    #def 
+
+#these classes will be for the most part static for now,
+#eventually id like them to be automatically found
+
+#alright so the source will eventually be the users device
+
+class subnet:
+    def __init__(self,subnet):
+        self.subnet = subnet
+    
+
+class source:
+    def __init__(self,source_ip):
+        self.source_ip = source_ip
+
+
+
+#the packet will be the user
+# i want the user to move through a "dungeon" i.e packet route
+# then the user finds the "monster" i.e the target device
+#class packet:
+
+#the target for our packet
+class Target:
+
+    def __init__(self,ip):
+        self.ip = ip
+        #self.name = Name
+        #self.network = Network
+
+
+#for now this will just have to be static 
+class mac_address:
+
+    def __init__(self,mac):
+        self.mac = mac
+
+class packet:
+    def __init__(self,source_ip,destination_ip):
+        self.source_ip = source_ip
+        self.destination_ip = destination_ip
+        self.protocol = "ICMP"
+        self.type = "8"
+        self.status = "outbound"
+
+
+    
 
 class port:
 
+    port_database = {"135":{"name":"RPC",
+                                       "category": "SYSTEM (core infrastructure)",
+                                       "ability": "Digital Switchboard",
+                                       "vulnerabilities":"internet exposure"},
+                                "137":{"name":"NBNS",
+                                       "category": "SYSTEM (core infrastructure)",
+                                       "ability": "Name Resolution",
+                                       "vulnerabilities":"info leak"},
+                                "445":{"name":"SMB",
+                                       "category": "SYSTEM (core infrastructure)",
+                                       "ability": "Resource Sharing",
+                                       "vulnerabilities":"remote execution"},}
+
+
     def __init__(self,ports):
         
-        self.port_dictionary_name = port_dictionary_name(ports)
-        self.port_dictionary = port_dictionary(ports)
+        #self.port_dictionary_name = port_dictionary_name(ports)
+        #self.port_dictionary = port_dictionary(ports)
+
+
+        port_result = port_check(ports)
+            #return port_result
+        self.port_list = []
+        for port in port_result:
+            if port in self.port_database:
+                self.port_list.append(port)
+                    #port, port_info in port_dictionary_list.items():
+                #self.port_list.append({port})
+                #self.port_list.append(f"Port number: {port} \n\nport name: {self.port_database[port]['name']} \n\ncategory: {self.port_database[port]['category']} \n\nability: {self.port_database[port]['ability']} \n\nvulnerability: {self.port_database[port]['vulnerabilities']}\n")
+                        #return port_list
+
 
     def port_return_name(self):
-        for number, port in enumerate(self.port_dictionary_name, start=1):
-            print(f"{number}. {port}")
+        for number, port in enumerate(self.port_database.keys(), start=1):
+            if port in self.port_list:
+                print(f"{number}. {port}")
 
     #def port_return_full(self):
+#the plan is to shift the nested dictionary approach to classes
 
+#supposedly itll be more organized yadayada
+"""class PortPort:
 
+    port_database = {"135":{"name":"RPC",
+                                   "category": "SYSTEM (core infrastructure)",
+                                   "ability": "Digital Switchboard",
+                                   "vulnerabilities":"internet exposure"},
+                            "137":{"name":"NBNS",
+                                   "category": "SYSTEM (core infrastructure)",
+                                   "ability": "Name Resolution",
+                                   "vulnerabilities":"info leak"},
+                            "445":{"name":"SMB",
+                                   "category": "SYSTEM (core infrastructure)",
+                                   "ability": "Resource Sharing",
+                                   "vulnerabilities":"remote execution"},}
+    
+    def port_return_name(self):
+            for number, port in enumerate(self.port_dictionary_name, start=1):
+                print(f"{number}. {port}")"""
+
+def clear_delay(seconds):
+
+    time.sleep(seconds)
+
+    
+
+def clear_screen():
+    os.system("cls" if os.name == "nt" else "clear")
 
 #this is rewrite number 2 of network hunter
 # for this code id like to implement classes
@@ -35,30 +153,49 @@ def main():
     print("===========================\n")
 
 #we have the inputs
+    while True:
+        try:
+            ip_address = input("Enter an ip address: ")
 
-    ip_address = input("Enter an ip address: ")
+            A,B,C,D = ip_address.split(".")
+            
+            A = int(A)
+            
+            B = int(B)
+            
+            C = int(C)
+            
+            D = int(D)
+        except Exception:
+            print("try again")
+        else:
 
-    A,B,C,D = ip_address.split(".")
+        
 
-    A = int(A)
+            #A,B,C,D = ip_address.split(".")
 
-    B = int(B)
+            #A = int(A)
 
-    C = int(C)
+            #B = int(B)
 
-    D = int(D)
+            #C = int(C)
 
-    os = input("Enter your operating system: ")
+            #D = int(D)
 
-    ports = input("Enter ports: ")
+            os = input("Enter your operating system: ")
 
-    device = input("Enter your device: ")
+            ports = input("Enter ports: ")
 
-    my_port = port(ports)
-    port_return = my_port.port_return_name()
-# host function which pretty much runns everything
+            device = input("Enter your device: ")
 
-    host(os,ports,ip_address,A,B,C,D,device)
+            my_port = port(ports)
+            port_return = my_port.port_return_name()
+
+        #def static_target():
+
+
+        # host function which pretty much runns everything
+            host(os,ports,ip_address,A,B,C,D,device)
 
     #this function takes our ip address (broken into octets)
     # returns true or false
@@ -137,8 +274,6 @@ def ip_info(A,B,C,D):
 
 def os_info(os):
 
-    os_bank = {}
-
     os_list = ["windows", 
                "linux", 
                "mac"]
@@ -146,6 +281,52 @@ def os_info(os):
     if os in os_list:
 
         return os
+
+def os_bank(os):
+    os_dictionary = {"windows":{
+            "os_name":"Microsoft Windows",
+            "vendor":"Microsoft",
+            "family":"Windows NT",
+            "kernel":"Windows NT kernel",
+            "common_devices": [
+                "desktop",
+                "laptop",
+                "workstation",
+                "server"
+            ],
+            "common_uses":[
+                "general home computer",
+                "business",
+                "gaming",
+                "enterprise",
+            ],
+            "file_systems":[
+                "NTFS",
+                "ReFS",
+                "FAT32",
+                "exFAT",
+            ],
+            "shells": [
+                "Powershell",
+                "Command Prompt",
+            ],
+            "Package_tools":[
+                "winget",
+                "Microsoft Store",
+            ],
+            "Strengths": [
+                "broad hardware and software support",
+                "Everyday consumer",
+                "Large enterprise presence",
+            ],
+            "security_notes":[
+                "easy target because of widespread",
+                "Uses Microsoft Defender and Windows Firewall",
+                "security can vary drastically depending on version, config, and patch level",
+            ]
+    
+            }}
+    
     
 def port_dictionary_name(ports):
     port_dictionary_name_list = {"135":{"name":"RPC"},
@@ -183,18 +364,45 @@ def port_dictionary(ports):
         if port in port_dictionary_list:
             #port, port_info in port_dictionary_list.items():
 
-            port_list.append(f"Port number: {port} \nport name: {port_dictionary_list[port]['name']} \ncategory: {port_dictionary_list[port]['category']} \nability: {port_dictionary_list[port]['ability']}")
+            port_list.append(f"Port number: {port} \n\nport name: {port_dictionary_list[port]['name']} \n\ncategory: {port_dictionary_list[port]['category']} \n\nability: {port_dictionary_list[port]['ability']} \n\nvulnerability: {port_dictionary_list[port]['vulnerabilities']}\n")
     return port_list
 
 
 
+#im doing this over and over again/
+#probably a way to shorten it up
+# proly a for loop if i had to guess
+
 def port_exended_info(ports):
 
-    port_analysis = input("type a number for analysis: ")
-    sub = port_dictionary(ports)
-    if port_analysis == "1" and len(sub) >= 1:
+    port_loop = True
+    while port_loop:
+    
+
+        port_analysis = int(input("type a number: "))
         sub = port_dictionary(ports)
-        print(sub[0])
+        if port_analysis >= 1:
+        #for definition in sub:
+            return (sub[port_analysis-1])
+        else:
+            return False
+    
+    #if port_analysis == "1" and len(sub) >= 1:
+        #sub = port_dictionary(ports)
+        #return(sub[0])
+
+    #if port_analysis == "2" and len(sub) >= 2:
+        #sub = port_dictionary(ports)
+        #return(sub[1])
+
+    #if port_analysis == "3" and len(sub) >= 3:
+        #sub = port_dictionary(ports)
+        #return(sub[2])
+
+    #if port_analysis == "4" and len(sub) >= 4:
+        #sub = port_dictionary(ports)
+        #return(sub[3])
+
 
     #port_result = port_check(ports)
     
@@ -304,33 +512,41 @@ def os_score(os):
 # the biome should also be more readily available to user
 #not just shown on screen once
 
+#im scratching my head at the way i have this biome thing set up
+# anyways we need to make this more tidy. At the moment it looks janky 
+# i replace typing 1 as input to the next screen with pressing enter
+# feels better looks cleaner
+
 def biome(A,B,C,D):
 
-    def menu(choice):
-        
-        if choice == "1":
 
-            return "1"
+    #def menu(choice):
         
-        elif choice == "2":
+        #if choice == "1":
 
-            return "2"
+            #return "1"
         
-        elif choice == "3":
+        #elif choice == "2":
 
-            return "3"
+            #return "2"
+        
+        #elif choice == "3":
+
+            #return "3"
         
     if ip_score(A,B,C,D) == 5:
 
         print("You have entered")
 
+        clear_screen()
+
         print("===============\nHome Network\n==============")
 
         print("Wi-fi fills the air\nCheap routers hum quietly\nDesktop beasts roam......\n")
 
-        choice = input("type 1 to continue: ")
-
-        return menu(choice)
+        choice = input("press enter to continue: ")
+        if choice == "":
+            return choice
     
     elif ip_score(A,B,C,D) == 10:
 
@@ -340,7 +556,7 @@ def biome(A,B,C,D):
 
         print("Countless packets drift through the void\nsignals echo from ever direction\nunknown hosts lurk beneath the surface.....")
         
-        menu()
+        
         
     elif ip_score(A,B,C,D) == 15:
 
@@ -349,8 +565,6 @@ def biome(A,B,C,D):
         print("================\nMirror Realm\n===============")
 
         print("Your search for a network\nleads only to yourself.....")
-
-        menu()
         
     elif ip_score(A,B,C,D) == 20:
 
@@ -359,8 +573,6 @@ def biome(A,B,C,D):
         print("=============\nLost Network\n==============")
 
         print("The air is silent\nNo router answers\nOnly abandoned devices remain.....")
-
-        menu()
 
 #right now this thing is essentially useless
 # i took away the port score function
@@ -403,11 +615,55 @@ def sub_menu_os(os):
 
     sub_os_info = os_info(os)
 
-    os_list = {"windows":{"family":"windows NT","Primary Strength":"Broad hardware compatibility","Primary Weakness":"Most commonly targeted desktop OS","Tyical Uses":"Gaming Business General Desktop"}}
+    os_dictionary = {"windows":{
+            "os_name":"Microsoft Windows",
+            "vendor":"Microsoft",
+            "family":"Windows NT",
+            "kernel":"Windows NT kernel",
+            "common_devices": [
+                "desktop",
+                "laptop",
+                "workstation",
+                "server"
+            ],
+            "common_uses":[
+                "general home computer",
+                "business",
+                "gaming",
+                "enterprise",
+            ],
+            "file_systems":[
+                "NTFS",
+                "ReFS",
+                "FAT32",
+                "exFAT",
+            ],
+            "shells": [
+                "Powershell",
+                "Command Prompt",
+            ],
+            "Package_tools":[
+                "winget",
+                "Microsoft Store",
+            ],
+            "Strengths": [
+                "broad hardware and software support",
+                "Everyday consumer",
+                "Large enterprise presence",
+            ],
+            "security_notes":[
+                "easy target because of widespread",
+                "Uses Microsoft Defender and Windows Firewall",
+                "security can vary drastically depending on version, config, and patch level",
+            ]
+    
+            }}
 
-    if sub_os_info in os_list:
+    if sub_os_info in os_dictionary:
+        os_short = os_dictionary[sub_os_info]
 
-        print (f"\nOperating System: {sub_os_info}\n\nFamily: {os_list[sub_os_info]['family']}\n\nPrimary Strength: {os_list[sub_os_info]['Primary Strength']}\n\n===================\n")
+        return(f"Os Name: {os_short['os_name']}\n\nVendor: {os_short['vendor']}\n")
+              
 
 #found function simply adds the text you found. to the screen
 # its meant to emulate pokemon a bit.
@@ -417,7 +673,7 @@ def found():
 
     you_found = input("You found.......")
 
-    if you_found == "1":
+    if you_found == "":
 
         return you_found
 
@@ -445,13 +701,20 @@ def monster_list():
     return home
 
 def host(os,ports,ip_address,A,B,C,D,device):
+    my_device = source("192.168.0.0")
+    my_target = Target('192.168.0.1')
+    mac_target_address = mac_address("00:1A:2B:3C:4D:5E")
+    my_subnet = subnet("255.255.255.0")
 
     biome_result = biome(A,B,C,D)
 
-    if biome_result == "1":
-        
+    if biome_result == "":
+        clear_screen()
+
         found_text = found()
-        if found_text == "1":
+        if found_text == "":
+
+            clear_screen()
 
             monster_name_list = monster_list()
 
@@ -464,9 +727,19 @@ def host(os,ports,ip_address,A,B,C,D,device):
             #rarity_classification(A,B,C,D,os,ports)
         active = True
         while active:
-            message = input("1. Operating system\n2. Ports\n3. Ip address\n")
+
+            clear_screen()
+
+            print("==================\n",device_name,monster_name,"\n""==================\n")
+
+            message = input("1. Operating system\n2. Ports\n3. Packet Dungeon\n4. Target\n")
             if message == "1":
-                print("\n=========operating system=========\n")
+
+                clear_screen()
+
+                print("==================\n",device_name,monster_name,"\n""==================\n")
+
+                #print("\n=========operating system=========\n")
 
                 os_result = os_info(os)
             
@@ -478,11 +751,15 @@ def host(os,ports,ip_address,A,B,C,D,device):
 
                 while sub_active:
 
-                    submenu = input("press one for analysis: ")
+                    submenu = input("press enter for analysis: ")
 
-                    if submenu == "1":
+                    if submenu == "":
+
+                       clear_screen()
+
+                       print("==================\n",device_name,monster_name,"\n""==================\n")
                        
-                       sub_menu_os(os)
+                       print(sub_menu_os(os))
 
                        #submenu_ip_address(A,B,C,D)
                     elif submenu == "0":
@@ -491,8 +768,14 @@ def host(os,ports,ip_address,A,B,C,D,device):
 
             elif message == "2":
 
+                clear_screen()
+
                 print("\n=========Ports=========\n")
                 
+                clear_screen()
+
+                print("==================\n",device_name,monster_name,"\n""==================\n")
+
                 my_port = port(ports)
                 my_port.port_return_name()
                 #print (port_return)
@@ -500,11 +783,129 @@ def host(os,ports,ip_address,A,B,C,D,device):
                 sub_active_port = True
                 while sub_active_port:
 
-                    port_exended_info(ports)
+                    #print("==================\n",device_name,monster_name,"\n""==================\n")
+                    port_e_i = port_exended_info(ports)
+                    if port_e_i == False:
+                        break
+                    else:
+
+                        #port_e_i = port_exended_info(ports)
+                        clear_screen()
+                        print("==================\n",device_name,monster_name,"\n""==================\n")
+                        print (port_e_i)
+
+                    #if port_e_i == False:
+                        #break
+            #elif message == 3:
+                #pass
+
+            #elif message == "4":
+                #clear_screen()
+                #print("==================\n",device_name,monster_name,"\n""==================\n")
+                
+
+                #print(input("123"))
+
+                #my_target = Target('123')
+                #print(my_target.ip)
+
+                    
+            #elif message == "5":
+                #clear_screen()
+                #print("==================\n",device_name,monster_name,"\n""==================\n")
+
+
+                #my_device = source("192.168.0.0")
+                #print(my_device.source_ip)
+
+                ##break_message = input("type 0 to break ")
+                #if break_message == "0":
+                    #break
+
+            #elif message == "6":
+                
+                #clear_screen()
+                #print("You have entered packet dungeon")
+                #select_dungeon = True
+                #while select_dungeon:
+                    ##print("1.ping\n")
+                    #select = input("select your dungeon: ")
+
+                    #dungeon_enter = input("hit enter to initiate ping ")
+                    #if select == "1":
+                        #print (my_device.source_ip)
+
+                        #print ("target", my_target.ip)
+
+                        #F,G,H,I = my_device.source_ip.split(".")
+                        #F = int(F)
+                        #G = int(G)
+                        #H = int(H)
+                        #I = int(I)
+
+                        #W,X,Y,Z = my_target.ip.split(".")
+                        ##W = int(W)
+                        #X = int(X)
+                        #Y = int(Y)
+                        #Z = int(Z)
+                        #print("subnet:", my_subnet.subnet)
+
+                        #if  Y == H:
+                        #    print('local network')
+                        ##elif Y > H:
+                        #    print("remote")
+                                                
+                        
+                        #send_arp = input("hit enter to send arp request")
+                        #if send_arp == "":
+                        #    print("sending.")
+                        #    clear_screen_with_delay(1.5)
+                        #    print("sending..")
+                        #    clear_screen_with_delay(1.5)
+                        #    print("sending...")
+                        #    clear_screen_with_delay(1.5)
+                        #    print("sending....")
+
+                        #mac_target = input("enter target MAC ")
+                        #if mac_target == mac_target_address.mac:
+                            #while True:
+                        #    print (my_target.ip)
+                        #    congrats = input("congrats you made it ")
+                        #    if congrats == "0":
+                                
+
+
+                        #        break
+            elif message == "3":
+
+                target = input("what is the target: ")
+
+                user = input("who is the user")
+
+
+                my_target = Target('123')
+
+                user_packet = packet(user,target)
+                if user_packet.destination_ip == my_target.ip:
+
+                #my_target = Target('123')
+                #if target == my_target.ip:
+
+                    curses.wrapper(network_curses.main)
+
+                else:
+                    print ("try again")
+
+
+
+
+
 
 
             elif message == "0":
                 break
+
+
 
 #this idea feels complex at the moment.
 #somehow i need the list of ports to be accessible if user inputs 1-9 

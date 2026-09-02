@@ -358,7 +358,7 @@ def host(os,ports,ip_address,A,B,C,D):
             
             Port_ability = port_categories_v2(ports)
             
-            print(Port_ability)
+            #print(Port_ability)
             for words in Port_ability:
                 print(words, Port_ability[words])
             

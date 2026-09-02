@@ -144,9 +144,9 @@ def port_info(ports):
                      "443":{"category": "WEB","ability": "virtual gateway","vulnerabilites":"entry point mask"},}
                      #"8080","8443"}
 
-    remote_port_list = ["22",
-                        "23",
-                        "3389","5900"]
+    remote_port_list = {"22":{"category": "Remote","ability": "encrypted tunnel","vulnerabilities":"botnet target"},
+                        "23":{"category": "Remote","ability": "encrypted tunnel","vulnerabilities":"botnet target"},}
+                        #"3389"{},"5900"{}}
 
     network_services_port_list = ["53","67","68","123","1900","5353"]
 
@@ -166,13 +166,13 @@ def port_info(ports):
 
     for port in port_result:
             #print(port)
-            #print (f"port:" ,number,"\n")
+            #print (f"port:" ,number,"\n")2
         if port in system_port_list:
                 #for port,port_attribute in system_port_list.items():
 
 
             bank = []
-            affinity = (f"port: {port}\n\ncategory: {system_port_list[port]['category']}\n\nability: {system_port_list[port]['ability']} \n\nvulnerability")       
+            affinity = (f"port: {port}\n\ncategory: {system_port_list[port]['category']}\n\nability: {system_port_list[port]['ability']} \n\nvulnerability: {system_port_list[port]['vulnerabilities']}\n\n===================\n")       
             
                 #category = "SYSTEM (core infrasturucture)"
             print(affinity)
@@ -181,8 +181,9 @@ def port_info(ports):
             # so how can i get it to return each port individually ? mayhaps unwrap them before return?
         elif port in web_port_list:
 
-            print (f"port: {port}\n\ncategory: {web_port_list[port]['category']}\n\nability: {web_port_list[port]['ability']}")
+            affinity = (f"port: {port}\n\ncategory: {web_port_list[port]['category']}\n\nability: {web_port_list[port]['ability']}\n\n===================\n")
             
+            print(affinity)
     
                 
 
@@ -494,8 +495,10 @@ def host(os,ports,ip_address,A,B,C,D,device):
                     print("\n=========Ports=========\n")
 
                     Port_ability = port_info(ports)
+
+                    print ("\n======================\n")
             
-                    print(Port_ability)
+                    #print(Port_ability)
 
                 elif message == "0":
                     break

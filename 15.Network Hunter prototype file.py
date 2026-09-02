@@ -1,3 +1,4 @@
+import random
 def main():
     # ask for input from the user for now... eventually id like to scan computers
     print("===========================")
@@ -21,10 +22,8 @@ def main():
 
 
 
-    host(os,ports,ip_address,A,B,C,D)
-
+    host(os,ports,ip_address,A,B,C,D,device)
     
-
 # this determines if ip is legitimate
 def ip_check(ip_address):
     A,B,C,D = ip_address.split(".")
@@ -35,23 +34,12 @@ def ip_check(ip_address):
     C = int(C)
     D = int(D)
 
-
     if bit_check(A,B,C,D) == True:
             
         private_or_public(A,B,C,D)
             
     else:
         return "invalid ip"
-    
-    #os = input("Enter your operating system: ")
-    
-    #os_result = os_check(os)
-    
-    #ort_result = port_check(ports)
-
-    #print (os_result)
-
-    #print (port_result)
 
 # i want bit check to tell me if every variable is true
 def bit_check(A,B,C,D):
@@ -59,25 +47,23 @@ def bit_check(A,B,C,D):
         return True
     else:
         return False
+
 # function that tells us if ip is private or public
 def private_or_public(A,B,C,D):
     if A == 192 and B == 168:
         return "private"
     elif A == 10:
         return "private"
+
 #function that prints os
 # needs to be changed to include odd os
-
 def os_check(os):
-    if os == "windows":
+    os_list = ["windows", "linux", "mac"]
+    if os in os_list:
         return os
-    elif os == "linux":
-        return os
-    elif os == "mac":
-        return os
-    else:
-        print("invalid os")
     # function that takes ports out of brackets and print them
+
+
 def port_check(ports):
     #number_list =[]
     port_list = ports.split(",")
@@ -86,16 +72,12 @@ def port_check(ports):
         #print(number)
     return port_list
 
-
 # device which user is scanning.
-#def device_check(device):
-    #if device == "laptop":
+def device_check(device):
+    device_list = ["laptop","desktop","phone"]
+    if device in device_list:
+        return device
     
-    #elif device == "phone":
-
-    #elif device == "desktop":
-
-    #elif device == "router"
 # assign range of ip addresses an amount of points based on how likely you will find them
 def rarity_generator_ip(A,B,C,D):
     score = 0
@@ -153,6 +135,8 @@ def rarity_generator_port(ports):
             
     return score_port
     # somehow i want to iterate over each number (that is check each number) and if it is in the list of number score_plus equal 5       
+
+#different "biomes" based on ip address
 def biome(A,B,C,D):
     if rarity_generator_ip(A,B,C,D) == 5:
         print("You have entered")
@@ -218,23 +202,25 @@ def rarity_classification(A,B,C,D,os,ports):
         print ("00001 common\n")
 
 # monster generator eventually itll be based on biome as well
-def monster(A,B,C,D,os,ports):
-    score_ip = rarity_generator_ip(A,B,C,D)
+#def monster(A,B,C,D,os,ports):
+    #score_ip = rarity_generator_ip(A,B,C,D)
 
-    score_os = rartity_generator_os(os)
+    #score_os = rartity_generator_os(os)
 
-    score_port = rarity_generator_port(ports)
+    #score_port = rarity_generator_port(ports)
 
-    Total = score_os + score_ip + score_port
+    #Total = score_os + score_ip + score_port
 
-    if Total <= 15:
-        print("===========================")
-        print("laptop ooze")
-        print("===========================\n")
-    elif Total > 15 and Total <= 25:
-        print("===========================")
-        print("ethernet ghoul")
-        print("===========================")
+    #if Total <= 15:
+        #print("===========================")
+        #print("laptop ooze")
+        #print("===========================\n")
+    #elif Total > 15 and Total <= 25:
+        #print("===========================")
+        #print("ethernet ghoul")
+        #print("===========================")
+
+
 def found():
     you_found = input("You found.......")
     if you_found == "1":
@@ -276,7 +262,7 @@ def individual_port(ports):
 
 
 def port_categories_v3(ports):
-    system_port_list = []
+    system_port_list = ["135"]
     ability_dictionary = {}
     port_result = port_check(ports)
     for number in port_result:
@@ -284,7 +270,7 @@ def port_categories_v3(ports):
         if number in system_port_list:
             category = "SYSTEM (core infrasturucture)"
         if number == "135":
-            ability_dictionary["Category"] = "SYSTEM"
+            ability_dictionary["Category"] = category
             ability_dictionary["Ability"] = "Digital Switchboard"
             return ability_dictionary
 #def port_categories(ports):
@@ -313,9 +299,19 @@ def port_categories_v3(ports):
        # if number == "443":
             #print ("HTTPS")
 
+def monster_list():
+    home = ["ooze",
+            "ghoul",
+            "skeleton",
+            "pest",
+            "dwarf",
+            "bat",
+            "critter",
+            "beast"]
+    return home
 
 # the host function will generate the monster and display stats
-def host(os,ports,ip_address,A,B,C,D):
+def host(os,ports,ip_address,A,B,C,D,device):
     biome_result = biome(A,B,C,D)
     if biome_result == "1":
         
@@ -325,7 +321,15 @@ def host(os,ports,ip_address,A,B,C,D):
             #print ("Network Hunter")
             #print("===========================\n")
 
-            monster(A,B,C,D,os,ports)
+            #monster(A,B,C,D,os,ports)
+
+            monster_name_list = monster_list()
+
+            monster_name = random.choice(monster_name_list)
+
+            device_name = device_check(device)
+
+            print("==================\n",device_name,monster_name,"\n""==================")
 
             rarity_classification(A,B,C,D,os,ports)
 
@@ -364,7 +368,13 @@ def host(os,ports,ip_address,A,B,C,D):
             for words in Port_ability:
                 print(words, Port_ability[words])
             
-            
+            #monster_name_list = monster_list()
+
+            #monster_name = random.choice(monster_name_list)
+
+            #device_name = device_check(device)
+
+            #print("==================\n",device_name,monster_name,"\n""==================")
             #rarity_classification(A,B,C,D,os,ports)
 
             

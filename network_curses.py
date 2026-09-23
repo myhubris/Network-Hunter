@@ -1,3 +1,5 @@
+import time
+
 import curses
 
 def main(screen,mg):
@@ -27,8 +29,44 @@ def main(screen,mg):
            "└───────────────────────────────────────┘"]
 
     
+    encounter_frames = [r"""
+   ______   __   __   ______   ______   __   __   __   __   ______   ______   ______
+  /  ___/  /  | / /  /  ___/  /  __  \ / /  / /  /  | / /  /__  __/  /  ___/  /  __  \
+ /  /__   /   |/ /  /  /     /  / /  // /  / /  /   |/ /     / /    /  /__   /  /_/  /
+/  ___/  /  /|  /  /  /     /  / /  // /  / /  /  /|  /     / /    /  ___/  /     __/
+\  \___ /  / | /  /  /___  /  /_/  // /__/ /  /  / | /     / /    \  \___ /  /|  |
+ \____//__/  |/   \_____/  \______/ \______/  /__/  |/     /_/      \____//__/ |__|
+ :////://////:    ://///:  ://////: ://////:  ://///:      ///      :////::/// :////)""",
 
+    r"""
+    ______   __   __   ______   ______   __   __   __   __   ______   ______   ______
+   /  ___/  /  | / /  /  ___/  /  __  \ / /  / /  /  | / /  /__  __/  /  ___/  /  __  \
+ /  /__   /   |/ /  /  /     /  / /  // /  / /  /   |/ /     / /    /  /__   /  /_/  /
+/  ___/  /  /|  /  /  /     /  / /  // /  / /  /  /|  /     / /    /  ___/  /     __/
+\  \___ /  / | /  /  /___  /  /_/  // /__/ /  /  / | /     / /    \  \___ /  /|  |
+ \____//__/  |/   \_____/  \______/ \______/  /__/  |/     /_/      \____//__/ |__|
+ :////://////:    ://///:  ://////: ://////:  ://///:      ///      :////::/// :////)""",
 
+    r"""
+    ______   __   __   ______   ______   __   __   __   __   ______   ______   ______
+   /  ___/  /  | / /  /  ___/  /  __  \ / /  / /  /  | / /  /__  __/  /  ___/  /  __  \
+  /  /__   /   |/ /  /  /     /  / /  // /  / /  /   |/ /     / /    /  /__   /  /_/  /
+ /  ___/  /  /|  /  /  /     /  / /  // /  / /  /  /|  /     / /    /  ___/  /     __/
+\  \___ /  / | /  /  /___  /  /_/  // /__/ /  /  / | /     / /    \  \___ /  /|  |
+ \____//__/  |/   \_____/  \______/ \______/  /__/  |/     /_/      \____//__/ |__|
+ :////://////:    ://///:  ://////: ://////:  ://///:      ///      :////::/// :////)""",
+
+    r"""
+    ______   __   __   ______   ______   __   __   __   __   ______   ______   ______
+   /  ___/  /  | / /  /  ___/  /  __  \ / /  / /  /  | / /  /__  __/  /  ___/  /  __  \
+  /  /__   /   |/ /  /  /     /  / /  // /  / /  /   |/ /     / /    /  /__   /  /_/  /
+ /  ___/  /  /|  /  /  /     /  / /  // /  / /  /  /|  /     / /    /  ___/  /     __/
+ \  \___ /  / | /  /  /___  /  /_/  // /__/ /  /  / | /     / /    \  \___ /  /|  |
+  \____//__/  |/   \_____/  \______/ \______/  /__/  |/     /_/      \____//__/ |__|
+ :////://////:    ://///:  ://////: ://////:  ://///:      ///      :////::/// :////)"""]
+
+#make it fade away
+#delete one line at a time
 
 # our player coordinates
 #player y coordinate
@@ -49,6 +87,7 @@ def main(screen,mg):
 
     show_T = True
 
+    encounter = False
     
 
     for y,row in enumerate(map):
@@ -56,7 +95,7 @@ def main(screen,mg):
 
     screen.addstr(player_y,player_x,"p")
     screen.addstr(22, 0, f"x={player_x} y={player_y}")
-    show_s = movement(screen,player_y,player_x,map,s_y,s_x,show_s,mg)
+    show_s = movement(screen,player_y,player_x,map,s_y,s_x,show_s,mg,encounter,encounter_frames)
         ##screen.addstr(s_y,s_x,"S")
         #movement(screen,player_y,player_x,map)
         #addstring(screen,player_y,player_x,map)
@@ -65,7 +104,7 @@ def main(screen,mg):
 
     #draw_map(screen,top,left,right,bottom,horizontal,vertical,zero_x,wall_boundary_x,wall_boundary_y,wall_boundary_x_range,player_x,player_y,wall_fill,left_corner)
     #hallway(screen,top,left,bottom,right,horizontal,vertical)
-def movement(screen,player_y,player_x,map,s_y,s_x,show_s,mg):
+def movement(screen,player_y,player_x,map,s_y,s_x,show_s,mg,encounter,encounter_frames):
     #if map[player_y][player_x] == " ":
 
         Target_reached = "0"
@@ -98,6 +137,9 @@ def movement(screen,player_y,player_x,map,s_y,s_x,show_s,mg):
 
                         show_s = True
 
+                        encounter = True
+                        
+
                     #return show_s
 
                         
@@ -110,6 +152,8 @@ def movement(screen,player_y,player_x,map,s_y,s_x,show_s,mg):
                     elif map[player_y + 1][player_x] == "T":
 
                         show_s = True
+
+                        encounter = True
 
                     #return show_s
 
@@ -125,6 +169,8 @@ def movement(screen,player_y,player_x,map,s_y,s_x,show_s,mg):
 
                         show_s = True
 
+                        encounter = True
+
                     #return show_s
 
                 elif key == curses.KEY_RIGHT:
@@ -137,17 +183,32 @@ def movement(screen,player_y,player_x,map,s_y,s_x,show_s,mg):
 
                         show_s = True
 
+                        encounter = True
+
                     #return show_s
                 
-                addstring(screen,player_y,player_x,map,s_y,s_x,show_s,mg)
+                addstring(screen,player_y,player_x,map,s_y,s_x,show_s,mg,encounter,encounter_frames)
 
-def addstring(screen,player_y,player_x,map,s_y,s_x,show_s,mg):
+def addstring(screen,player_y,player_x,map,s_y,s_x,show_s,mg,encounter,encounter_frames):
 
         for y,row in enumerate(map):
             screen.addstr(y,0,row)
 
+        if encounter == True:
+                
+            for i in range(4):
+                for frame in encounter_frames:
+                    screen.clear()
+                    screen.addstr(5, 5, frame)
+                    screen.refresh()
+                    time.sleep(0.08)
+            #screen.clear()
+            #screen.addstr(0,0,art)
+            #screen.refresh()
+             
+
         if show_s == True:
-            screen.addstr(0,0,mg)
+            screen.addstr(0,40,mg)
             #screen.addstr(s_y, s_x, "S")          
 
         screen.addstr(player_y,player_x,"p")
